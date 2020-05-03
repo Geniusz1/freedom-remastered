@@ -19,13 +19,12 @@ local succ,err=pcall(function()
 -------- SERVER BODY
 
 	-- init server socket
-	local socket=require"socket"
+	local socket=dofile("./luasocket/socket.lua")
 	config=dofile"config.lua"
 	local succ,err=socket.bind(config.bindhost,config.bindport,10)
 	local crackbotServer=socket.bind("localhost",34405,1)--socket.tcp()
 	crackbot = nil
 	crackbotServer:settimeout(0)
-	
 	if not succ then
 		error("Could not bind: "..err)
 	end
@@ -548,7 +547,6 @@ local succ,err=pcall(function()
 				conn:close()
 			else
 				print("New connection: "..(host or"?")..":"..(port or"?"))
-
 				-- look for free IDs
 				local hasid
 				for i=0,255 do
